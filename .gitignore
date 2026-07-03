@@ -1,0 +1,7 @@
+.claude
+.pytest_cache
+*.pyc
+**/*.pyc
+.ruff_cache
+data/*.yaml
+scripts/__pycache__/*

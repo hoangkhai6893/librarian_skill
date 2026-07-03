@@ -1,0 +1,60 @@
+id: "ml-research-pytorch"
+name: "ML Research with PyTorch"
+description: "Bo kit cho nghien cuu ML va deep learning voi PyTorch. Bao gom experiment tracking, testing models, debugging training loops, va containerization."
+
+project_signals:
+  technologies: ["pytorch", "python"]
+  domains: ["ai-ml", "research"]
+  file_patterns:
+    - "pyproject.toml"
+    - "requirements.txt"
+    - "setup.py"
+    - "*.ipynb"
+    - "train.py"
+    - "Makefile"
+
+core_skills:
+  - id: "pytorch-patterns"
+    priority: "critical"
+    why: "PyTorch best practices — model architecture, training loops, GPU management, CUDA."
+
+  - id: "python-patterns"
+    priority: "critical"
+    why: "Python patterns cho ML research — dataclasses, type hints, hydra configs."
+
+  - id: "python-testing"
+    priority: "high"
+    why: "pytest cho ML — test data pipelines, model output shapes, training step."
+
+  - id: "deep-research"
+    priority: "high"
+    why: "Literature review, paper reading, hypothesis forming cho research projects."
+
+  - id: "systematic-debugging"
+    priority: "high"
+    why: "Debug training issues — loss divergence, gradient explosion, overfitting — cần hệ thống."
+
+  - id: "docker-patterns"
+    priority: "medium"
+    why: "Reproducible training environment — CUDA version, dependencies pinned."
+
+workflow_skills:
+  - id: "brainstorming"
+    priority: "high"
+    when: "Trước khi bắt đầu experiment mới hoặc architecture search"
+
+  - id: "writing-plans"
+    priority: "high"
+    when: "Khi lên plan cho experiment series hoặc research sprint"
+
+  - id: "executing-plans"
+    priority: "high"
+    when: "Khi chạy theo experiment plan"
+
+  - id: "verification-before-completion"
+    priority: "medium"
+    when: "Trước khi submit paper hoặc release model checkpoint"
+
+  - id: "codebase-onboarding"
+    priority: "medium"
+    when: "Khi join research project mới hoặc tiếp tục work của người khác"

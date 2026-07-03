@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# session-start — Agent Hub session hook
+# 1. Auto-imports any new Skills_Pool repos into the library (silent, fast).
+# 2. Detects new projects and suggests skills, or checks for updates.
+# Timeout: 5000ms (enforced by Claude Code hooks)
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+INDEX_ROOT="$(dirname "$SCRIPT_DIR")"
+LIBRARY="$INDEX_ROOT/library"
+MANIFEST="${CLAUDE_PROJECT_DIR:-$(pwd)}/library-manifest.yaml"
+
+# Silent if library not set up
+[ -d "$LIBRARY" ] || exit 0
+
+# ── Step 0: Ensure Python dependencies are present (self-heal on first run) ──
+python3 -c "import yaml" 2>/dev/null || pip install --quiet --user -r "$INDEX_ROOT/requirements.txt" 2>/dev/null
+
+# ── Step 1: Auto-import new Skills_Pool projects ──────────────────────────────
+# Runs silently; only prints a summary if new skills were actually imported.
+AUTO_IMPORT_OUT=$(python3 "$INDEX_ROOT/scripts/auto-import.py" --silent --no-rebuild 2>/dev/null)
+if [ -n "$AUTO_IMPORT_OUT" ]; then
+    echo "[Agent Hub] New skills imported from Skills_Pool:"
+    echo "$AUTO_IMPORT_OUT"
+    # Rebuild catalog in background so session start does not block
+    python3 "$INDEX_ROOT/scripts/build-catalog.py" > /dev/null 2>&1 &
+fi
+
+# ── Step 2: Project-level skill suggestions / update checks ──────────────────
+PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+
+if [ -f "$MANIFEST" ]; then
+    # Existing project — check for updates
+    python3 "$INDEX_ROOT/scripts/check-updates.py" "$PROJECT_DIR" 2>/dev/null
+else
+    # New project — detect and suggest
+    python3 "$INDEX_ROOT/scripts/detect-project.py" "$PROJECT_DIR" 2>/dev/null
+fi
+
+exit 0

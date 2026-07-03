@@ -1,0 +1,47 @@
+id: "debugging-deep-dive"
+name: "Debugging Deep Dive"
+curator: "dkhai"
+description: "Bo ky nang debug chuyen sau, tu phan tich root cause den verify fix va review. Dung khi gap bug kho, production issue, hoac loi khong ro nguyen nhan."
+curator_notes: "Khong bao gio patch symptom ma khong tim root cause. systematic-debugging la buoc bat buoc dau tien. investigate dung cho cac bug phuc tap can dao sau vao code. gsd-debugger huong dan tu dong hypotheses neu ban bi stuck."
+
+entries:
+  - id: "systematic-debugging"
+    seq: 1
+    role: "Framework debug co he thong: thu thap evidence, form hypotheses, test methodically"
+    when: "Luon bat dau o day truoc khi thu bat ky fix nao — day la Iron Law"
+    required: true
+
+  - id: "investigate"
+    seq: 2
+    role: "Deep dive vao codebase de hieu flow va tim nguon goc van de"
+    when: "Khi can hieu code khong quen hoac bug co nhieu potential causes"
+    required: true
+
+  - id: "gsd-debugger"
+    seq: 3
+    role: "Agent tu dong sinh hypotheses va test chung theo thu tu"
+    when: "Khi ban da stuck hon 30 phut hoac bug phuc tap voi nhieu interacting components"
+    required: false
+
+  - id: "gsd-codebase-mapper"
+    seq: 4
+    role: "Vet ban do dependency va data flow cua codebase de hieu context day du"
+    when: "Khi bug lien quan den nhieu module hoac kho trace call chain"
+    required: false
+
+  - id: "verification-before-completion"
+    seq: 5
+    role: "Dam bao fix khong gay regression va tat ca related tests van pass"
+    when: "Sau khi ap dung fix, truoc khi close issue"
+    required: true
+
+  - id: "requesting-code-review"
+    seq: 6
+    role: "Review fix cung dong nghiep — bug fix thuong co edge cases an"
+    when: "Khi fix anh huong den logic quan trong hoac core path"
+    required: false
+
+tags: ["debugging", "root-cause", "investigation", "quality"]
+complexity: "intermediate"
+project_types: ["any"]
+applicable_phases: ["debugging", "testing", "review"]

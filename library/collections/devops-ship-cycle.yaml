@@ -1,0 +1,59 @@
+id: "devops-ship-cycle"
+name: "DevOps Ship Cycle"
+curator: "dkhai"
+description: "Quy trinh ship code an toan tu review, security scan, QA den deploy va monitor. Dam bao moi release an toan, co the rollback, va duoc theo doi sau deploy."
+curator_notes: "Khong bao gio ship ma khong qua security-scan va qa. canary deploy truoc khi full rollout. guard la buoc bat buoc de detect van de sow deploy. Sequence nay giam incident rate dang ke."
+
+entries:
+  - id: "requesting-code-review"
+    seq: 1
+    role: "Peer review code truoc bat ky buoc ship nao — gate dau tien"
+    when: "Khi code ready, truoc tat ca cac buoc khac trong ship cycle"
+    required: true
+
+  - id: "security-scan"
+    seq: 2
+    role: "Quet OWASP vulnerabilities, dependency CVE, secrets leak truoc khi merge"
+    when: "Truoc moi merge vao main/production branch"
+    required: true
+
+  - id: "qa"
+    seq: 3
+    role: "Quality assurance toan dien: functional, regression, performance, edge cases"
+    when: "Sau code review va security scan deu pass"
+    required: true
+
+  - id: "docker-patterns"
+    seq: 4
+    role: "Dong goi app theo docker best practices de dam bao consistency giua envs"
+    when: "Khi build artifact cho deployment"
+    required: true
+
+  - id: "deployment-patterns"
+    seq: 5
+    role: "Deploy an toan voi blue-green, feature flags, health checks, rollback plan"
+    when: "Khi chuan bi deploy len staging hoac production"
+    required: true
+
+  - id: "ship"
+    seq: 6
+    role: "Checklist ship cuoi cung: announce, monitor dashboards, be ready for rollback"
+    when: "Ngay truoc va sau khi deploy"
+    required: true
+
+  - id: "canary"
+    seq: 7
+    role: "Roll out dan dan voi traffic routing, monitor metrics truoc full release"
+    when: "Cho production deployments anh huong nhieu users"
+    required: false
+
+  - id: "guard"
+    seq: 8
+    role: "Monitor sau deploy: alerts, error rates, latency, business metrics"
+    when: "Sau moi deployment len production, it nhat 24-48 gio"
+    required: true
+
+tags: ["devops", "deployment", "security", "monitoring", "ship"]
+complexity: "advanced"
+project_types: ["web-fullstack", "api-service", "devops-pipeline"]
+applicable_phases: ["review", "testing", "deployment", "monitoring"]

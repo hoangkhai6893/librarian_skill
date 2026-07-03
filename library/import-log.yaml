@@ -1,0 +1,27 @@
+- dry_run: false
+  projects:
+  - errors: 0
+    imported: 1
+    name: fake-new-skill
+  timestamp: '2026-04-03T08:09:53.642630+00:00'
+  total_errors: 0
+  total_imported: 1
+- dry_run: false
+  projects:
+  - errors: 0
+    imported: 0
+    name: ros1-expert
+  - errors: 0
+    imported: 0
+    name: text-to-cad
+  timestamp: '2026-07-02T10:16:44.337424+00:00'
+  total_errors: 0
+  total_imported: 0
+- dry_run: false
+  projects:
+  - errors: 5
+    imported: 0
+    name: obsidian-skills
+  timestamp: '2026-07-03T00:24:51.949792+00:00'
+  total_errors: 5
+  total_imported: 0

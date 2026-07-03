@@ -1,0 +1,59 @@
+id: "ros2-robotics"
+name: "ROS2 Autonomous Robot"
+description: "Bo kit day du cho du an robot tu hanh voi ROS2. Bao gom debug, testing, planning, va docker patterns cho robotic software."
+
+project_signals:
+  technologies: ["cpp", "python", "ros2"]
+  domains: ["robotics"]
+  file_patterns:
+    - "CMakeLists.txt"
+    - "package.xml"
+    - "*.launch.py"
+    - "colcon.meta"
+    - "setup.py"
+
+core_skills:
+  - id: "systematic-debugging"
+    priority: "critical"
+    why: "ROS2 bugs thường phức tạp — node crash, TF issues, timing race conditions. Cần debug có hệ thống."
+
+  - id: "investigate"
+    priority: "critical"
+    why: "ROS2 codebase lớn với nhiều node. Cần tool để map dependencies và trace message flow."
+
+  - id: "brainstorming"
+    priority: "high"
+    why: "Architecture robot system cần cân nhắc kỹ — sensor fusion, algorithm selection, safety constraints."
+
+  - id: "writing-plans"
+    priority: "high"
+    why: "Plan rõ ràng trước khi implement node mới tránh integration hell."
+
+  - id: "test-driven-development"
+    priority: "high"
+    why: "ROS2 có gtest/pytest integration. Unit test cho algorithms trước khi test trên hardware."
+
+  - id: "docker-patterns"
+    priority: "medium"
+    why: "Docker/dev container đảm bảo reproducible build environment cho ROS2 workspace."
+
+workflow_skills:
+  - id: "executing-plans"
+    priority: "high"
+    when: "Khi bắt đầu implement node hoặc algorithm mới"
+
+  - id: "verification-before-completion"
+    priority: "high"
+    when: "Trước khi test trên robot thật — lỗi hardware nguy hiểm"
+
+  - id: "gsd-codebase-mapper"
+    priority: "medium"
+    when: "Khi onboard vào codebase ROS2 mới hoặc debug cross-node issues"
+
+  - id: "requesting-code-review"
+    priority: "medium"
+    when: "Khi hoàn thành thay đổi quan trọng đến safety/control logic"
+
+  - id: "finishing-a-development-branch"
+    priority: "low"
+    when: "Sau khi feature ổn định và tested"

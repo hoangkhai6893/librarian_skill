@@ -1,0 +1,71 @@
+id: "api-service-go"
+name: "API Service Go"
+description: "Bo kit cho backend API service viet bang Go. Bao gom Go patterns, testing, API design, database, security va full ship cycle."
+
+project_signals:
+  technologies: ["go", "postgres"]
+  domains: ["web-backend"]
+  file_patterns:
+    - "go.mod"
+    - "go.sum"
+    - "main.go"
+    - "cmd/"
+    - "internal/"
+
+core_skills:
+  - id: "golang-patterns"
+    priority: "critical"
+    why: "Go idioms — error handling, interfaces, goroutines, context, struct patterns."
+
+  - id: "golang-testing"
+    priority: "critical"
+    why: "Go testing — table-driven tests, testify, mock interfaces, benchmarks."
+
+  - id: "api-design"
+    priority: "critical"
+    why: "REST API design — routing, middleware, error responses, versioning cho Go services."
+
+  - id: "postgres-patterns"
+    priority: "critical"
+    why: "PostgreSQL với Go — sqlx/pgx, connection pooling, migrations, query optimization."
+
+  - id: "security-scan"
+    priority: "high"
+    why: "API security — input validation, SQL injection, auth/authz, dependency audits."
+
+  - id: "docker-patterns"
+    priority: "high"
+    why: "Multi-stage Docker builds cho Go — minimal images, build caching."
+
+workflow_skills:
+  - id: "brainstorming"
+    priority: "high"
+    when: "Trước khi design API mới hoặc refactor service"
+
+  - id: "writing-plans"
+    priority: "high"
+    when: "Khi implement feature mới hoặc breaking change"
+
+  - id: "architecture-decision-records"
+    priority: "medium"
+    when: "Khi có architectural decision quan trọng về service design"
+
+  - id: "executing-plans"
+    priority: "high"
+    when: "Khi implement theo task list"
+
+  - id: "deployment-patterns"
+    priority: "medium"
+    when: "Khi deploy service lên production"
+
+  - id: "ship"
+    priority: "medium"
+    when: "Khi release version mới của service"
+
+  - id: "canary"
+    priority: "low"
+    when: "Khi cần gradual rollout cho production traffic"
+
+  - id: "guard"
+    priority: "medium"
+    when: "Sau mỗi production deployment — monitor error rates và latency"

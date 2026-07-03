@@ -1,0 +1,59 @@
+id: "tdd-first"
+name: "TDD-First Development"
+curator: "dkhai"
+description: "Bo ky nang phat trien theo quy trinh TDD day du, tu giai doan hieu yeu cau den commit cuoi cung. Ap dung khi bat dau feature moi hoac refactor lon."
+curator_notes: "Day la collection nen ap dung cho moi feature moi. Bat dau voi brainstorming de tranh bi go sai huong ngay tu dau, sau do viet test truoc khi code. Sequence nay da duoc chung minh giam bug rate 40-60% trong thuc te."
+
+entries:
+  - id: "brainstorming"
+    seq: 1
+    role: "Kham pha yeu cau va tim hieu van de truoc khi viet bat ky dong code nao"
+    when: "Luon bat dau o buoc nay — ngay ca task nho cung can 5-10 phut brainstorm"
+    required: true
+
+  - id: "writing-plans"
+    seq: 2
+    role: "Lap ke hoach cu the: test cases can viet, acceptance criteria, step-by-step implementation"
+    when: "Sau khi brainstorm xong va hieu ro yeu cau"
+    required: true
+
+  - id: "test-driven-development"
+    seq: 3
+    role: "Quy trinh TDD core: viet test -> fail -> implement -> pass -> refactor"
+    when: "Khi bat dau implement bat ky logic business nao"
+    required: true
+
+  - id: "tdd-workflow"
+    seq: 4
+    role: "Pattern chi tiet hon cho TDD: mock strategy, fixture design, test organization"
+    when: "Khi can huong dan cu the hon ve cach to chuc test suite"
+    required: false
+
+  - id: "executing-plans"
+    seq: 5
+    role: "Thuc thi ke hoach theo tung task, check-off khi xong, khong nhay coc"
+    when: "Khi bat dau implement theo plan da co"
+    required: true
+
+  - id: "requesting-code-review"
+    seq: 6
+    role: "Chuan bi code review request ro rang voi context va cau hoi cu the"
+    when: "Khi tat ca tests pass va code ready for review"
+    required: true
+
+  - id: "verification-before-completion"
+    seq: 7
+    role: "Kiem tra lan cuoi: tests, lint, types, no regressions truoc khi close"
+    when: "Truoc khi mark task la done hoac merge PR"
+    required: true
+
+  - id: "finishing-a-development-branch"
+    seq: 8
+    role: "Cleanup branch: squash commits, update changelog, remove debug code"
+    when: "Truoc khi merge vao main branch"
+    required: false
+
+tags: ["tdd", "development", "quality", "workflow", "testing"]
+complexity: "intermediate"
+project_types: ["any"]
+applicable_phases: ["planning", "development", "testing", "review"]

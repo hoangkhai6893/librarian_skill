@@ -1,0 +1,72 @@
+id: "web-fullstack-typescript"
+name: "Web Fullstack TypeScript"
+description: "Bo kit cho web app fullstack voi TypeScript. Bao gom frontend patterns, API design, database, testing, security va deployment."
+
+project_signals:
+  technologies: ["typescript", "react", "postgres"]
+  domains: ["web-frontend", "web-backend"]
+  file_patterns:
+    - "package.json"
+    - "tsconfig.json"
+    - "next.config.*"
+    - "vite.config.*"
+    - "drizzle.config.*"
+    - "prisma/schema.prisma"
+
+core_skills:
+  - id: "frontend-patterns"
+    priority: "critical"
+    why: "React/Vue/Next.js patterns — component architecture, state management, performance."
+
+  - id: "api-design"
+    priority: "critical"
+    why: "REST/GraphQL API design — endpoints, versioning, error handling, validation."
+
+  - id: "postgres-patterns"
+    priority: "critical"
+    why: "PostgreSQL best practices — indexing, queries, connection pooling cho production."
+
+  - id: "tdd-workflow"
+    priority: "high"
+    why: "Jest/Vitest TDD patterns cho TypeScript — unit, integration, mocking strategies."
+
+  - id: "e2e-testing"
+    priority: "high"
+    why: "Playwright/Cypress E2E tests cho critical user flows."
+
+  - id: "security-scan"
+    priority: "high"
+    why: "Web apps là target chính của attacks — OWASP, dependency CVEs, secrets."
+
+  - id: "database-migrations"
+    priority: "high"
+    why: "Schema migrations an toàn — không break production, rollback plan."
+
+workflow_skills:
+  - id: "brainstorming"
+    priority: "high"
+    when: "Trước khi design feature mới hoặc architecture change"
+
+  - id: "writing-plans"
+    priority: "high"
+    when: "Khi feature cần nhiều component thay đổi"
+
+  - id: "executing-plans"
+    priority: "high"
+    when: "Khi implement theo task list"
+
+  - id: "docker-patterns"
+    priority: "medium"
+    when: "Khi setup local dev environment hoặc production deployment"
+
+  - id: "deployment-patterns"
+    priority: "medium"
+    when: "Khi deploy lên staging/production"
+
+  - id: "codebase-onboarding"
+    priority: "medium"
+    when: "Khi join project mới hoặc onboard team member"
+
+  - id: "requesting-code-review"
+    priority: "medium"
+    when: "Sau khi hoàn thành implementation"

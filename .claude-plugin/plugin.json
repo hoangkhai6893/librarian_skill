@@ -1,0 +1,10 @@
+{
+  "name": "librarian_skill",
+  "version": "1.0.0",
+  "description": "AI skills library manager — discover, publish, and update skills/agents for your projects. Invoke /librarian to browse and install.",
+  "author": {
+    "name": "dkhai"
+  },
+  "keywords": ["skills", "agents", "library", "publish", "ros2", "workflow"],
+  "commands": "./commands"
+}

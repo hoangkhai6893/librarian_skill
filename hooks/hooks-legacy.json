@@ -1,0 +1,12 @@
+{
+  "hooks": [
+    {
+      "name": "agent-hub-session-start",
+      "event": "session-start",
+      "description": "Detect project type and suggest skills from Agent Hub library",
+      "command": "$HOME/Agent_Hub/agent-hub-index/hooks/session-start",
+      "timeout_ms": 5000,
+      "enabled": true
+    }
+  ]
+}

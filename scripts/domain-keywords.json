@@ -1,0 +1,56 @@
+{
+  "DOMAIN_KEYWORDS": {
+    "robotics":       ["ros", "ros2", "lidar", "camera", "slam", "sensor", "robot", "navigation", "pointcloud", "point cloud", "odometry", "tf2", "transforms", "imu", "velodyne", "realsense", "calibration", "localization", "mapping", "rviz", "gazebo", "urdf", "xacro"],
+    "web-frontend":   ["frontend", "react", "vue", "angular", "css", "html", "ui", "svelte", "nextjs", "next.js", "tailwind", "component", "browser", "dom", "typescript", "javascript", "webpack", "vite", "remix", "astro"],
+    "web-backend":    ["backend", "api", "rest", "graphql", "django", "fastapi", "express", "rails", "flask", "server", "endpoint", "middleware", "http", "websocket", "grpc", "microservice", "node"],
+    "mobile":         ["android", "ios", "swift", "flutter", "kotlin", "swiftui", "compose", "mobile", "app store", "xcode", "jetpack"],
+    "devops":         ["docker", "ci", "cd", "deploy", "kubernetes", "k8s", "terraform", "pipeline", "container", "helm", "jenkins", "github actions", "circleci", "ansible", "nginx", "infrastructure", "devops", "gitops"],
+    "data":           ["database", "sql", "postgres", "postgresql", "mysql", "mongodb", "redis", "clickhouse", "migration", "orm", "query", "schema", "index", "data pipeline", "etl", "warehouse", "bigquery", "snowflake"],
+    "security":       ["security", "owasp", "auth", "authentication", "authorization", "vulnerability", "cve", "injection", "xss", "csrf", "penetration", "pentest", "encryption", "jwt", "oauth", "secret", "credential", "audit"],
+    "ai-ml":          ["llm", "agent", "embedding", "model", "inference", "anthropic", "openai", "gemini", "gpt", "claude", "transformer", "pytorch", "tensorflow", "training", "fine-tuning", "rag", "vector", "neural", "machine learning", "deep learning"],
+    "workflow":       ["workflow", "git", "branch", "commit", "pr", "pull request", "review", "plan", "phase", "task", "sprint", "agile", "scrum", "jira", "linear", "milestone"],
+    "debugging":      ["debug", "bug", "error", "root cause", "investigation", "trace", "stacktrace", "crash", "exception", "breakpoint", "gdb", "valgrind", "profil"],
+    "testing":        ["test", "tdd", "e2e", "unit", "coverage", "jest", "pytest", "vitest", "playwright", "cypress", "mock", "stub", "fixture", "assertion", "integration test"],
+    "planning":       ["plan", "roadmap", "milestone", "sprint", "backlog", "requirements", "spec", "design doc", "brainstorm", "architecture decision"],
+    "design":         ["design", "ux", "ui audit", "wireframe", "figma", "prototype", "mockup", "accessibility", "responsive", "visual", "typography", "color scheme"],
+    "documentation":  ["document", "docs", "readme", "changelog", "api docs", "tutorial", "guide", "wiki", "swagger", "openapi"],
+    "research":       ["research", "paper", "literature", "survey", "experiment", "hypothesis", "benchmark", "evaluation", "metric", "dataset", "baseline", "ablation"],
+    "infrastructure": ["cloud", "aws", "gcp", "azure", "vm", "server", "load balancer", "cdn", "dns", "ssl", "certificate", "monitoring", "alerting", "logging", "observability"]
+  },
+
+  "TECH_KEYWORDS": {
+    "python":      ["python", "django", "fastapi", "flask", "pytest", "pip", "poetry", "conda", "jupyter", "numpy", "pandas", "scipy", ".py"],
+    "cpp":         ["c++", "cpp", "cmake", "clang", "llvm", "makefile", "conan", "vcpkg", "gtest", "catch2", ".cpp", ".hpp", ".cc", ".h"],
+    "rust":        ["rust", "cargo", "crate", "tokio", "serde", "actix", ".rs"],
+    "go":          ["golang", "go ", "gopher", "goroutine", "gorm", "gin", "echo", ".go"],
+    "java":        ["java", "spring", "gradle", "maven", "junit", "hibernate", "springboot", ".java"],
+    "typescript":  ["typescript", "ts ", ".ts", "tsx", "deno", "bun", "node", "npm", "pnpm", "yarn"],
+    "javascript":  ["javascript", "js ", ".js", "jsx", "eslint", "prettier", "webpack"],
+    "swift":       ["swift", "swiftui", "xcode", "cocoapods", "spm", ".swift"],
+    "kotlin":      ["kotlin", "jetpack", "compose", "coroutine", "gradle", ".kt"],
+    "ros2":        ["ros2", "ros 2", "colcon", "ament", "rclcpp", "rclpy", "rosbag", "ros_topic", "ros_service", "nav2", "moveit"],
+    "docker":      ["docker", "dockerfile", "container", "docker-compose", "podman", "buildx"],
+    "react":       ["react", "jsx", "tsx", "hooks", "redux", "zustand", "react query", "next.js", "remix"],
+    "pytorch":     ["pytorch", "torch", "cuda", "tensor", "autograd", "nn.module", "dataloader"],
+    "postgres":    ["postgres", "postgresql", "psql", "pgvector", "supabase"],
+    "android":     ["android", "apk", "adb", "jetpack", "room", "retrofit", "okhttp"]
+  },
+
+  "PHASE_KEYWORDS": {
+    "planning":       ["plan", "roadmap", "brainstorm", "requirements", "discuss", "explore", "design", "spec", "scope", "kickoff", "inception"],
+    "architecture":   ["architect", "design", "structure", "adr", "decision", "pattern", "diagram", "system design", "component", "interface"],
+    "development":    ["implement", "build", "develop", "code", "write", "create", "add feature", "modify", "refactor"],
+    "testing":        ["test", "tdd", "e2e", "unit test", "coverage", "qa", "quality", "verify", "validate"],
+    "debugging":      ["debug", "bug", "fix", "root cause", "investigate", "trace", "error", "crash", "broken"],
+    "review":         ["review", "audit", "check", "inspect", "verify", "assess", "evaluate", "code review"],
+    "deployment":     ["deploy", "ship", "release", "publish", "launch", "ci/cd", "land", "merge", "production"],
+    "monitoring":     ["monitor", "canary", "observe", "log", "alert", "metric", "dashboard", "health", "uptime"],
+    "documentation":  ["document", "docs", "changelog", "readme", "api docs", "tutorial", "write up"]
+  },
+
+  "STABILITY_HINTS": {
+    "stable":       ["stable", "production", "battle-tested", "proven", "mature"],
+    "beta":         ["beta", "experimental", "new", "evolving", "preview"],
+    "experimental": ["experimental", "wip", "draft", "prototype", "poc"]
+  }
+}
