@@ -16,6 +16,7 @@ Exit codes:
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -109,6 +110,29 @@ def check_agent_valid_frontmatter() -> CheckResult:
             result.fail(f"{f.name}: missing 'name' field")
         if not fm.get("description"):
             result.fail(f"{f.name}: missing 'description' field")
+    return result
+
+
+def check_librarian_copies_in_sync() -> CheckResult:
+    """`commands/librarian.md` (plugin) and `library/agents/librarian.md` (published
+    copy) must expose the same subcommands — see "Two Copies of /librarian" in README."""
+    result = CheckResult("LIBRARIAN_COPIES_IN_SYNC")
+    cmd_file = INDEX_ROOT / "commands" / "librarian.md"
+    lib_file = LIBRARY / "agents" / "librarian.md"
+    if not cmd_file.exists() or not lib_file.exists():
+        result.warn("One or both librarian.md copies not found — skipping")
+        return result
+
+    pattern = r"^###\s+`([a-zA-Z][a-zA-Z0-9_-]*)"
+    cmd_subs = set(re.findall(pattern, cmd_file.read_text(encoding="utf-8"), re.MULTILINE))
+    lib_subs = set(re.findall(pattern, lib_file.read_text(encoding="utf-8"), re.MULTILINE))
+
+    only_in_cmd = cmd_subs - lib_subs
+    only_in_lib = lib_subs - cmd_subs
+    if only_in_cmd:
+        result.warn(f"commands/librarian.md has subcommands missing from library/agents/librarian.md: {sorted(only_in_cmd)}")
+    if only_in_lib:
+        result.warn(f"library/agents/librarian.md has subcommands missing from commands/librarian.md: {sorted(only_in_lib)}")
     return result
 
 
@@ -293,6 +317,9 @@ def run_validation(strict: bool = False, output_json: bool = False) -> int:
 
     # Check 3: agents have valid frontmatter
     results.append(check_agent_valid_frontmatter())
+
+    # Check 3b: the two librarian.md copies expose the same subcommands
+    results.append(check_librarian_copies_in_sync())
 
     # Check 4: catalog.json exists
     cat_result, catalog = check_catalog_exists()

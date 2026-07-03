@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "builtAt": "2026-07-02T12:56:24.084260+00:00",
+  "builtAt": "2026-07-03T01:41:23.604368+00:00",
   "totalEntries": 73,
   "entries": [
     {
@@ -5067,32 +5067,29 @@
     },
     {
       "id": "librarian",
-      "name": "Librarian",
+      "name": "librarian",
       "type": "agent",
       "source": "unknown",
       "source_path": "agents/librarian.md",
       "library_version": "1.0",
       "imported_at": "",
-      "description": "AI Librarian for Agent Hub — discover, recommend, and publish skills to your project. Use when you want to find the right skills, understand what's available, or install skills from the curated library.",
+      "description": "AI Librarian — recommend, publish, and manage skills for your project. This is the published copy that lives inside a consumer project (not the warehouse repo itself).",
       "domains": [
-        "ai-ml",
+        "data",
         "workflow",
-        "robotics",
-        "web-frontend"
+        "robotics"
       ],
       "technologies": [
-        "python",
-        "pytorch"
+        "python"
       ],
       "phases": [
         "deployment",
-        "debugging",
-        "planning"
+        "review"
       ],
       "cost": "medium",
-      "stability": "beta",
-      "complexity": "advanced",
-      "usage_pattern": "session-hook",
+      "stability": "experimental",
+      "complexity": "intermediate",
+      "usage_pattern": "during-implementation",
       "project_types": [
         "any"
       ],
@@ -5102,40 +5099,29 @@
       "path": "agents/librarian.md",
       "keywords": [
         ".js",
+        ".py",
         "agent",
-        "ai-ml",
-        "brainstorm",
-        "bug",
-        "cmake",
-        "debug",
-        "debugging",
-        "deploy",
+        "check",
+        "ci",
+        "create",
+        "data",
         "deployment",
-        "develop",
-        "docker",
-        "gin",
-        "index",
-        "investigate",
+        "document",
+        "git",
         "log",
-        "orm",
-        "pattern",
-        "phase",
-        "plan",
-        "planning",
         "pr",
         "publish",
         "python",
-        "pytorch",
-        "react",
-        "research",
+        "query",
+        "rest",
+        "review",
+        "robot",
         "robotics",
         "ros",
         "ros2",
-        "survey",
-        "test",
-        "torch",
-        "typescript",
-        "web-frontend",
+        "spec",
+        "ts",
+        "warehouse",
         "workflow"
       ],
       "tools": [

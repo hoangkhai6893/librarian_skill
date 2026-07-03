@@ -1,0 +1,8 @@
+customized: false
+imported_at: '2026-07-03T02:10:07.290136+00:00'
+imported_by: dkhai
+library_version: '1.0'
+notes: ''
+original_hash: sha256:116decc0417e83e78825387b522d03c0c73d10053e93743f569c64454ba08018
+source_path: reports/llm-day-to-day-degradation.md
+source_project: claude-code-best-practice

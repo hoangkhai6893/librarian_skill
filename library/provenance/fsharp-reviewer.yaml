@@ -1,0 +1,8 @@
+customized: false
+imported_at: '2026-07-03T02:10:07.475599+00:00'
+imported_by: dkhai
+library_version: '1.0'
+notes: ''
+original_hash: sha256:23959730d35eb17ebc1648224cd0d860c784450f3fcef531d33f9917ca9cfa53
+source_path: agents/fsharp-reviewer.md
+source_project: everything-claude-code

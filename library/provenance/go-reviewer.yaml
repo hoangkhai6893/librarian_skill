@@ -1,0 +1,8 @@
+customized: false
+imported_at: '2026-07-03T02:10:07.478507+00:00'
+imported_by: dkhai
+library_version: '1.0'
+notes: ''
+original_hash: sha256:a2472d08781fe2d368be30a7d8b261dc650cb24115a4dbea1801bc575b45c656
+source_path: agents/go-reviewer.md
+source_project: everything-claude-code

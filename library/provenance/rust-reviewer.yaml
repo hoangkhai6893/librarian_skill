@@ -1,0 +1,8 @@
+customized: false
+imported_at: '2026-07-03T02:10:07.494911+00:00'
+imported_by: dkhai
+library_version: '1.0'
+notes: ''
+original_hash: sha256:24a57af191b359551fd6fd3d35f39b0d3b52e0f10ceb56f2ab7aecf31e342d69
+source_path: agents/rust-reviewer.md
+source_project: everything-claude-code

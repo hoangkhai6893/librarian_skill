@@ -1,0 +1,8 @@
+customized: false
+imported_at: '2026-07-03T02:10:07.477944+00:00'
+imported_by: dkhai
+library_version: '1.0'
+notes: ''
+original_hash: sha256:6b8ee2a78f17295a0b7045386d16636ff63c20f8f949dc3fe85485e15601a14e
+source_path: agents/go-build-resolver.md
+source_project: everything-claude-code

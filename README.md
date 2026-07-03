@@ -5,8 +5,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue)]()
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-supported-6f42c1)]()
-[![OpenCode](https://img.shields.io/badge/OpenCode-supported-000000)]()
-[![GitHub Copilot](https://img.shields.io/badge/GitHub%20Copilot-supported-000000)]()
+[![OpenCode](https://img.shields.io/badge/OpenCode-skills%20only-yellow)]()
+[![GitHub Copilot CLI](https://img.shields.io/badge/Copilot%20CLI-skills%20only-yellow)]()
+[![VS Code Copilot Chat](https://img.shields.io/badge/VS%20Code%20Copilot-manual-lightgrey)]()
+[![Codex CLI](https://img.shields.io/badge/Codex%20CLI-skills%20only-yellow)]()
 
 ---
 
@@ -30,34 +32,40 @@ You've built great AI workflows before — TDD, systematic debugging, security s
 
 ## 🎯 What Is Librarian?
 
-Librarian is a **curated skill and agent library** for AI-assisted development.
+Librarian is a **curated skill/agent warehouse + publishing pipeline** — not a search engine over hundreds of raw sources. `library/` holds ~73 hand-curated entries (skills, agents, stacks, collections); scripts **copy** the ones a project needs straight into that project's own directory. Nothing is symlinked — once published, a project keeps working even if this repo is deleted.
 
-It's a single source of truth for your best development workflows — skills and agents organized by use case, with automatic stack matching for your project type.
+Two different jobs happen here:
 
-**How it works:**
+- **Consumer** — you have a project and need skills. Ask `/librarian recommend` or `/librarian stack <id>`, get a short shortlist with reasons, confirm, done.
+- **Curator** — you're growing the library itself. `/librarian import <path>` scans an external repo of skills/agents and, after you pick which ones, folds them into `library/` for every future project to use.
+
+**How publishing actually works:**
 
 ```
 ┌─────────────────────┐     ┌─────────────────────┐     ┌─────────────────────┐
-│  Your AI Assistant  │     │    Librarian Lib.   │     │   Your Project      │
-│                     │     │                     │     │                     │
-│  /librarian recommend│────▶│  Skills             │────▶│  .claude/skills/    │
-│  /librarian stack   │     │  Agents             │────▶│  .opencode/skills/  │
-│  /librarian publish │     │  Stacks             │────▶│  .github/copilot/   │
-│                     │     │  catalog.json       │     │  library-manifest   │
+│  /librarian command │     │  library/ (this repo│     │   Your Project      │
+│                     │     │  = the warehouse)   │     │                     │
+│  recommend / stack  │────▶│  skills/  agents/   │──copy──▶ .claude/skills/  │
+│  publish / import   │     │  stacks/ collections│──copy──▶ .opencode/skills/│
+│                     │     │  catalog.json       │──copy──▶ .github/copilot/ │
 └─────────────────────┘     └─────────────────────┘     └─────────────────────┘
 
-1. You open a project in Claude Code, OpenCode, or Copilot
-2. You type: /librarian recommend
-3. Librarian analyzes your project, matches skills, and recommends a toolkit
-4. You say "yes" — skills are installed automatically
+1. You open a project and type: /librarian recommend
+2. detect-project.py scans package.json / CMakeLists.txt / requirements.txt / etc.
+   and matches it against library/stacks/*.yaml
+3. Librarian shows a short shortlist with WHY for each skill — it never auto-publishes
+4. You confirm → publish-to-project.py copies the chosen SKILL.md files in and
+   records them in library-manifest.yaml
 ```
 
-**In 30 seconds:** Open project → type `/librarian recommend` → get a complete, pre-matched skill set.
+**In 30 seconds (Claude Code):** Open project → type `/librarian recommend` → confirm → skills land in `.claude/skills/`.
+
+> The `/librarian` slash command ships two ways — as a Claude Code plugin, and auto-attached to every publish on any platform. See [Two Copies of `/librarian`](#two-copies-of-librarian) for why, and [Known Limitations](#-known-limitations) for what's verified where.
 
 ---
 
 ## 📥 Installation
-
+### Claude
 Librarian ships as a self-hosted Claude Code plugin marketplace — no separate installer needed.
 
 ```
@@ -73,6 +81,60 @@ Cloned locally instead? Point at the folder:
 ```
 
 Requires Python 3.12+. The `pyyaml` dependency (`requirements.txt`) is auto-installed on first session start if missing.
+
+### OpenCode
+git clone https://github.com/hoangkhai6893/librarian_skill.git 
+cd librarian_skill 
+cp -rf  commands/librarian.md ~/.config/opencode/commands/
+
+**Skills need no conversion at all** — OpenCode reads Claude Code's `.claude/skills/` directory directly (verified against opencode.ai docs), alongside its own `.opencode/skills/`. So the simplest path is to just publish with the Claude Code target, even without installing the plugin:
+OpenCode will pick up `.claude/skills/` on its own. If you'd rather use OpenCode-native paths, `--platform opencode` writes to `.opencode/skills/{id}/SKILL.md` instead — functionally equivalent.
+
+**`/librarian` as a command:** OpenCode's real custom-command format (`.opencode/commands/*.md`, frontmatter needs a `template` field) is different from `library/agents/librarian.md` — that file publishes to `.opencode/agents/librarian.md`, which OpenCode treats as a **sub-agent**, not a slash command. A sub-agent still works (OpenCode can dispatch to it by description-matching), but `/librarian` won't be typeable verbatim yet. See [Known Limitations](#-known-limitations).
+
+### GitHub Copilot CLI
+
+The standalone `copilot` terminal tool (`npm install -g @github/copilot`) — not the VS Code extension, not the older `gh copilot`.
+
+**Skills need no conversion** — Copilot CLI reads the shared `.agents/skills/` convention directly, and `.claude/skills/` too. Publish with `--platform claude-code` as above, or drop skill folders straight into `.agents/skills/`.
+
+**`/librarian` as a command:** Copilot CLI has no custom slash-command/prompt-file mechanism (open feature request, not built yet). The closest fit is a custom **sub-agent** (`.agent.md` files, project dir `.github/agents/`, global `~/.copilot/agents/`), invoked with `--agent librarian` or `/agent`:
+
+```bash
+mkdir -p .github/agents
+cp librarian_skill/library/agents/librarian.md .github/agents/librarian.agent.md
+```
+
+`publish-to-project.py --platform github-copilot` does **not** write to this path today (see [Known Limitations](#-known-limitations)) — copy manually for now.
+
+### VS Code (GitHub Copilot Chat)
+
+The editor extension — different product from the CLI tools above, and it has no "Skills" concept at all. Use its own **prompt files** and **custom agents** instead:
+
+```bash
+# Slash-command-style: one prompt file per skill, invoked as /{id}
+mkdir -p .github/prompts
+cp librarian_skill/library/skills/brainstorming/SKILL.md .github/prompts/brainstorming.prompt.md
+
+# Custom agent: the Librarian itself
+mkdir -p .github/agents
+cp librarian_skill/library/agents/librarian.md .github/agents/librarian.agent.md
+```
+
+`publish-to-project.py --platform github-copilot` currently writes to `.github/copilot/` and `.vscode/*.agent.md` — **neither path matches VS Code's real current convention** (`.github/prompts/`, `.github/agents/`), confirmed against current VS Code docs. Copy manually to the paths above until the script is updated. See [Known Limitations](#-known-limitations).
+
+### Codex CLI
+
+OpenAI's `codex` (`npm install -g @openai/codex`). Skills need no conversion — Codex reads the same `.agents/skills/` convention as OpenCode/Copilot CLI (project: `.agents/skills/`, global: `~/.agents/skills/`).
+
+**`/librarian` as a command:** Codex deprecated custom slash-command prompts in favor of Skills, so the natural port is to ship the Librarian *as a skill*, not a command:
+
+```bash
+mkdir -p .agents/skills/librarian
+cp librarian_skill/commands/librarian.md .agents/skills/librarian/SKILL.md
+```
+
+Codex auto-loads skills into context when relevant. Not yet wired into `publish-to-project.py`.
 
 ---
 
@@ -122,6 +184,25 @@ Pre-configured skill bundles for common project types:
 | 🔬 **ml-research-pytorch** | ML Research |
 | ⚡ **api-service-go** | Go Backend |
 
+A stack is scoped to a **project type**. `/librarian stack <id>` or `--stack <id>` installs all of its `core_skills` + `workflow_skills` in one shot.
+
+---
+
+## 📚 Available Collections
+
+Pre-ordered skill **sequences** for a workflow, independent of project type — install with `--collection <id>`:
+
+| Collection | Workflow |
+|------------|----------|
+| `tdd-first` | Requirements → TDD implementation → review |
+| `debugging-deep-dive` | Root-cause analysis → fix → verify → review |
+| `plan-driven-development` | Planning → architecture decisions → execution |
+| `devops-ship-cycle` | Review → security scan → QA → deploy → monitor |
+
+```bash
+python3 scripts/publish-to-project.py --project . --collection tdd-first
+```
+
 ---
 
 ## 🛠️ Usage
@@ -149,8 +230,9 @@ Pre-configured skill bundles for common project types:
 # Detect tech signals and suggest best-fit stack
 python3 scripts/detect-project.py /path/to/project
 
-# Publish skills/stacks to a target project
+# Publish skills/stacks/collections to a target project
 python3 scripts/publish-to-project.py --project . --stack ros2-robotics --platform claude-code
+python3 scripts/publish-to-project.py --project . --collection tdd-first
 python3 scripts/publish-to-project.py --project . --skills brainstorming --dry-run
 
 # Check for available updates
@@ -215,13 +297,19 @@ python3 scripts/build-catalog.py
 
 ## 🤖 Agents
 
+Curated agents live in `library/agents/` and publish as sub-agents (Claude Code) or converted `.agent.md` files (other platforms):
+
 | Agent | Role |
 |-------|------|
-| 📚 **librarian** | Skill discovery & management |
-| 🐛 **gsd-debugger** | Autonomous debugging |
-| ⚡ **gsd-executor** | Task execution |
-| 📋 **gsd-planner** | Project planning |
-| ✅ **gsd-verifier** | Verification |
+| 📚 **librarian** | Published copy of the `/librarian` command itself — see [Two Copies of `/librarian`](#two-copies-of-librarian) |
+| 🔍 **code-reviewer** | Reviews a completed step/PR for correctness and quality |
+| 📋 **gsd-planner** | Creates executable phase plans with task breakdown |
+| ⚡ **gsd-executor** | Executes GSD plans with atomic commits and checkpoints |
+| ✅ **gsd-verifier** | Verifies a phase actually delivered its goal |
+| 🐛 **gsd-debugger** | Investigates bugs with a scientific-method debug loop |
+| 🧭 **gsd-plan-checker** · **gsd-codebase-mapper** · **gsd-advisor-researcher** | Supporting GSD-pipeline roles — see `library/agents/` for details |
+
+> On Claude Code, the primary `/librarian` experience still comes from the plugin's `commands/librarian.md`, not this entry — see [Two Copies of `/librarian`](#two-copies-of-librarian) in Key Concepts.
 
 ---
 
@@ -242,7 +330,7 @@ agent-hub-index/
 │   ├── detect-project.py       Tech/domain signal detection
 │   ├── publish-to-project.py   Multi-platform skill publishing
 │   ├── check-updates.py        Update checking via sha256
-│   ├── validate.py             Library integrity validation (9 checks)
+│   ├── validate.py             Library integrity validation (10 checks)
 │   ├── detect-skills-pool.py   Skills_Pool structure detection
 │   ├── import-skill.py         Curated skill import from sources
 │   ├── auto-import.py          Full pipeline orchestrator
@@ -262,10 +350,24 @@ agent-hub-index/
 **Stack** = bundle for a **project type** (e.g. `ros2-robotics`)
 **Collection** = sequence for a **workflow** (e.g. `tdd-first`)
 
+### Two Copies of `/librarian`
+
+There are two `librarian.md` files in this repo, and both are load-bearing:
+
+| File | Ships when... | How it finds `library/`/`scripts/` |
+|------|----------------|-------------------------------------|
+| `commands/librarian.md` | This repo is installed as a **Claude Code plugin** (see Installation) | Relative paths — the whole repo is copied into the plugin cache together, so `library/` and `scripts/` are always right next to it |
+| `library/agents/librarian.md` | A skill/stack is **published** into *any* project via `publish-to-project.py` — lands as `.claude/commands/`, `.opencode/agents/`, or `.vscode/*.agent.md` | Reads `library_source` from that project's `library-manifest.yaml` (written on every publish) — it can't assume the warehouse is next door, because it usually isn't |
+
+Same dispatch logic, same subcommands, two different install paths with two
+different path-resolution needs. They're kept in sync **manually** — each
+file has a comment pointing at the other, and `validate.py` warns
+(`LIBRARIAN_COPIES_IN_SYNC`) if their subcommand lists drift apart.
+
 ### Curation Workflow
 
 ```
-Skills_Pool/ (raw sources)
+Skills_Project_Folder/ (raw sources)
     │
     ▼
 detect-skills-pool.py  →  registry.yaml (scan results)
@@ -288,14 +390,25 @@ build-catalog.py  →  catalog.json (master index)
 - ✅ **Conflict detection** — Won't overwrite customized skills (use `--force` to override)
 - ✅ **Hash verification** — sha256 checksums detect outdated or modified skills
 - ✅ **File locking** — `publish-to-project.py` uses flock to prevent concurrent corruption
-- ✅ **Validation** — `validate.py` runs 9 integrity checks (SKILL.md presence, provenance, frontmatter, catalog completeness, duplicate IDs, reference validity, collections, stacks)
+- ✅ **Validation** — `validate.py` runs 10 integrity checks (SKILL.md presence, provenance, agent frontmatter, [librarian.md copies in sync](#two-copies-of-librarian), catalog completeness, duplicate IDs, reference validity, collections, stacks)
+
+---
+
+## ⚠️ Known Limitations
+
+Verified against the actual scripts, not just design docs:
+
+- **Fixed:** `publish-to-project.py` auto-attaches the Librarian command whenever you publish skills/a stack (unless `--no-librarian`). This used to silently no-op — `library/agents/librarian.md` was missing, so it always printed `[SKIP]` and `catalog.json` had a dangling `librarian` entry. Both are fixed now: publishing to any platform also drops a file into that project (`.claude/commands/`, `.opencode/agents/`, or `.vscode/*.agent.md`), confirmed with real (non-dry-run) publishes to all three platforms. See [Two Copies of `/librarian`](#two-copies-of-librarian) for how the two files divide the work.
+- **Confirmed (not just unverified) against each platform's real current docs:** `--platform opencode` publishes the Librarian to `.opencode/agents/librarian.md`, which OpenCode treats as a **sub-agent**, not a slash command — `/librarian` typed verbatim will not work there today; OpenCode's real command format lives at `.opencode/commands/*.md` with a `template` frontmatter field this repo doesn't produce yet.
+- **Confirmed bug:** `--platform github-copilot` writes to `.github/copilot/{id}.prompt.md` and `.vscode/{id}.agent.md` — **neither path matches any real product.** VS Code's actual convention is `.github/prompts/*.prompt.md` + `.github/agents/*.agent.md`; the standalone GitHub Copilot CLI has no prompt-file system at all and uses `.github/agents/*.agent.md` for sub-agents instead. This platform target needs a rewrite — see the manual copy steps under Installation for VS Code / GitHub Copilot CLI in the meantime.
+- **Good news, confirmed:** OpenCode, GitHub Copilot CLI, and Codex CLI all read the shared `.agents/skills/` directory convention directly (OpenCode and Copilot CLI also read `.claude/skills/` directly) — so for **skills** (not the `/librarian` command itself), publishing once with `--platform claude-code` is often enough; no per-platform conversion needed.
 
 ---
 
 ## 🙋 FAQ
 
 **Q: Can I use this without Claude Code?**  
-A: Yes. Skills are plain Markdown files. They work with OpenCode, GitHub Copilot, or any tool that reads `.md` files.
+A: Yes. Skills are plain Markdown files, and `/librarian` itself now publishes to OpenCode and GitHub Copilot too (not just Claude Code) — see [Known Limitations](#-known-limitations) for what's verified vs. not on each platform.
 
 **Q: What if I customize a published skill?**  
 A: Librarian detects the change and won't overwrite it. Use `--force` to pull the latest.
@@ -320,7 +433,7 @@ Detailed docs in `docs/`:
 - [`03-algorithms.md`](docs/03-algorithms.md) — Core algorithms
 - [`04-data-flow.md`](docs/04-data-flow.md) — Data flow diagrams
 - [`05-librarian-agent.md`](docs/05-librarian-agent.md) — Librarian spec
-- [`06-implementation-phases.md`](docs/06-implementation-phases.md) — Roadmap
+
 
 ---
 

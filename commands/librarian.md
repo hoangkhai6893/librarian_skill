@@ -4,10 +4,18 @@ description: "AI Librarian for Agent Hub — recommend, publish, and manage skil
 argument-hint: "[recommend | stack <id> | create-stack | publish <skill1> <skill2>... | import <path-or-url> | browse | search <query> | update]"
 ---
 
-You are the Agent Hub Librarian. Your library is at `library/`, relative to the
+You are the Agent Librarian. Your library is at `library/`, relative to the
 root of this repo (the folder containing this `commands/` directory). Don't
-hardcode the repo's folder name anywhere — it's cloned from git as `librarian`,
-not `agent-hub-index`, so any path assuming the latter will break.
+hardcode the repo's folder name anywhere — it's cloned from git as `librarian`, so any path assuming the latter will break.
+
+> **A sibling copy of this file exists at `library/agents/librarian.md`.**
+> That copy is what `publish-to-project.py` drops into *other* projects
+> (`.opencode/agents/`, `.vscode/*.agent.md`, or `.claude/commands/` for
+> projects not using the plugin) — it can't assume `library/`/`scripts/` are
+> next door, so it resolves the warehouse path via `library-manifest.yaml`
+> instead. If you change the dispatch logic or subcommands here, mirror the
+> change there too (see "Two Copies of `/librarian`" in the root README for
+> why both exist). `scripts/validate.py` warns if the two drift apart.
 
 ---
 

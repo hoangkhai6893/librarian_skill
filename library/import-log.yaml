@@ -25,3 +25,35 @@
   timestamp: '2026-07-03T00:24:51.949792+00:00'
   total_errors: 5
   total_imported: 0
+- dry_run: false
+  projects:
+  - errors: 0
+    imported: 5
+    name: claude-code-best-practice
+  - errors: 21
+    imported: 323
+    name: everything-claude-code
+  - errors: 7
+    imported: 26
+    name: get-shit-done
+  - errors: 0
+    imported: 1
+    name: gstack
+  - errors: 0
+    imported: 1
+    name: learn-claude-code
+  - errors: 0
+    imported: 0
+    name: ros1-expert
+  - errors: 0
+    imported: 0
+    name: ros2-engineering-skills
+  - errors: 13
+    imported: 0
+    name: superpowers
+  - errors: 0
+    imported: 0
+    name: text-to-cad
+  timestamp: '2026-07-03T02:10:07.287717+00:00'
+  total_errors: 41
+  total_imported: 356

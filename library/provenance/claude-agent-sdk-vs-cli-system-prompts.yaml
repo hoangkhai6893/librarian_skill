@@ -1,0 +1,8 @@
+customized: false
+imported_at: '2026-07-03T02:10:07.292509+00:00'
+imported_by: dkhai
+library_version: '1.0'
+notes: ''
+original_hash: sha256:17f5e7d8a6a8b9688e54c1f1ba7bf8447d65a5b20f65118fa0478d535c3da6aa
+source_path: reports/claude-agent-sdk-vs-cli-system-prompts.md
+source_project: claude-code-best-practice

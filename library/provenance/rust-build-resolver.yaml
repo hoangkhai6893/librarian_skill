@@ -1,0 +1,8 @@
+customized: false
+imported_at: '2026-07-03T02:10:07.494360+00:00'
+imported_by: dkhai
+library_version: '1.0'
+notes: ''
+original_hash: sha256:82a4f68ba5a999598d46178456303aac815c72d89a2d14caeb1e21d6e132f716
+source_path: agents/rust-build-resolver.md
+source_project: everything-claude-code
