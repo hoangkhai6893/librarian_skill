@@ -87,56 +87,18 @@ git clone https://github.com/hoangkhai6893/librarian_skill.git
 cd librarian_skill 
 cp -rf  commands/librarian.md ~/.config/opencode/commands/
 
-**Skills need no conversion at all** — OpenCode reads Claude Code's `.claude/skills/` directory directly (verified against opencode.ai docs), alongside its own `.opencode/skills/`. So the simplest path is to just publish with the Claude Code target, even without installing the plugin:
-OpenCode will pick up `.claude/skills/` on its own. If you'd rather use OpenCode-native paths, `--platform opencode` writes to `.opencode/skills/{id}/SKILL.md` instead — functionally equivalent.
-
-**`/librarian` as a command:** OpenCode's real custom-command format (`.opencode/commands/*.md`, frontmatter needs a `template` field) is different from `library/agents/librarian.md` — that file publishes to `.opencode/agents/librarian.md`, which OpenCode treats as a **sub-agent**, not a slash command. A sub-agent still works (OpenCode can dispatch to it by description-matching), but `/librarian` won't be typeable verbatim yet. See [Known Limitations](#-known-limitations).
-
 ### GitHub Copilot CLI
-
-The standalone `copilot` terminal tool (`npm install -g @github/copilot`) — not the VS Code extension, not the older `gh copilot`.
-
-**Skills need no conversion** — Copilot CLI reads the shared `.agents/skills/` convention directly, and `.claude/skills/` too. Publish with `--platform claude-code` as above, or drop skill folders straight into `.agents/skills/`.
-
-**`/librarian` as a command:** Copilot CLI has no custom slash-command/prompt-file mechanism (open feature request, not built yet). The closest fit is a custom **sub-agent** (`.agent.md` files, project dir `.github/agents/`, global `~/.copilot/agents/`), invoked with `--agent librarian` or `/agent`:
-
-```bash
-mkdir -p .github/agents
-cp librarian_skill/library/agents/librarian.md .github/agents/librarian.agent.md
 ```
-
-`publish-to-project.py --platform github-copilot` does **not** write to this path today (see [Known Limitations](#-known-limitations)) — copy manually for now.
+/plugin marketplace add /path/to/librarian_skill
+/plugin install librarian_skill@librarian_skill
+```
 
 ### VS Code (GitHub Copilot Chat)
 
-The editor extension — different product from the CLI tools above, and it has no "Skills" concept at all. Use its own **prompt files** and **custom agents** instead:
+Let use Open Custumizations then choose Plugins , click Install Plugin frome source. Pase https://github.com/hoangkhai6893/librarian_skill.git 
+marketplace add https://github.com/hoangkhai6893/librarian_skill.git
 
-```bash
-# Slash-command-style: one prompt file per skill, invoked as /{id}
-mkdir -p .github/prompts
-cp librarian_skill/library/skills/brainstorming/SKILL.md .github/prompts/brainstorming.prompt.md
 
-# Custom agent: the Librarian itself
-mkdir -p .github/agents
-cp librarian_skill/library/agents/librarian.md .github/agents/librarian.agent.md
-```
-
-`publish-to-project.py --platform github-copilot` currently writes to `.github/copilot/` and `.vscode/*.agent.md` — **neither path matches VS Code's real current convention** (`.github/prompts/`, `.github/agents/`), confirmed against current VS Code docs. Copy manually to the paths above until the script is updated. See [Known Limitations](#-known-limitations).
-
-### Codex CLI
-
-OpenAI's `codex` (`npm install -g @openai/codex`). Skills need no conversion — Codex reads the same `.agents/skills/` convention as OpenCode/Copilot CLI (project: `.agents/skills/`, global: `~/.agents/skills/`).
-
-**`/librarian` as a command:** Codex deprecated custom slash-command prompts in favor of Skills, so the natural port is to ship the Librarian *as a skill*, not a command:
-
-```bash
-mkdir -p .agents/skills/librarian
-cp librarian_skill/commands/librarian.md .agents/skills/librarian/SKILL.md
-```
-
-Codex auto-loads skills into context when relevant. Not yet wired into `publish-to-project.py`.
-
----
 
 ## ⚡ Quick Start
 
